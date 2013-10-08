@@ -2,7 +2,11 @@ mods =
 [
 	{
 		"name" : "Paste Server",
-		"location" : "./paste"
+		"location" : "./paste/paste"
+	},
+	{
+		"name" : "Login Testing",
+		"location" : "./login/login"
 	}
 ];
 

@@ -3,7 +3,7 @@ var http = require("http"),
     files = require('./files'),
     modules = require("./webmodule").read();
 
-port = 25565;
+port = 80;
 defualt_filename = "/home/ted/HTTPD"
 charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
@@ -30,7 +30,7 @@ http.createServer(function(request, response) {
 			}
 			else {
 				filename = defualt_filename+uri;
-				console.log(filename);
+				//console.log(filename);
 				files.get_file(filename, response);
 			}
 		}
