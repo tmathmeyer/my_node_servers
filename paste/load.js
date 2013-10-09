@@ -4,7 +4,7 @@ function loadPaste() {
 		console.log("/paste/p" + window.location.pathname.substring(6));
 		console.log(data);
 		var data = replaceAll("\\\\t", "&#09;", replaceAll("\\\\n", "<br>", replaceAll("\\\\\"", "\"", data)));
-		document.getElementById('paste_data').innerHTML = "<pre>"+data.substring(0, data.length - 1).substring(1)+"</pre>";
+		document.getElementById('paste_data').innerHTML = "<pre>"+data+"</pre>";
 
 		var $content = $("#paste_data");
 		$content.syntaxHighlight();

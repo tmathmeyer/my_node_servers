@@ -10,13 +10,19 @@ charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 http.createServer(function(request, response) {
 	var uri = url.parse(request.url).pathname;
 	
+	var cookies = {};
+	request.headers.cookie && request.headers.cookie.split(';').forEach(function( cookie ) {
+		var parts = cookie.split('=');
+		cookies[ parts[ 0 ].trim() ] = ( parts[ 1 ] || '' ).trim();
+	});
+	
 	if (request.method == 'POST') {
 		if (uri == "/") {
 			//there is literally nothing here. go to index.html
 		}
 		else {
 			var module = uri.split("/")[1];
-			modules[module].POST(request, response);
+			modules[module].POST(request, response, cookies);
 		}
 	}
 	else if (request.method == 'GET') {
@@ -31,7 +37,7 @@ http.createServer(function(request, response) {
 			else {
 				filename = defualt_filename+uri;
 				//console.log(filename);
-				files.get_file(filename, response);
+				files.get_file(filename, response, cookies);
 			}
 		}
 	}
