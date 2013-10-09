@@ -18,7 +18,10 @@
 				}
 			}
 			page_login_event = function(){
-				$( "body" ).append("<div class='account shadow button' onclick = 'show_account()'>your pastes</div>");
+				$( "body" ).append("<div id='account' class = 'shadow button' onclick='test()'>your pastes</div>");
+			}
+			test = function(){
+				window.location = "http://tm.wpi.edu/paste/my/pastes";
 			}
 		</script>
 

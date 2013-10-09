@@ -3,7 +3,6 @@ var url = require("url"),
   files = require('../files'),
   db = require('../db'),
   redis = require("redis"),
-  fs = require("fs"),
   client = redis.createClient();
 
 
@@ -37,7 +36,7 @@ POST = function(request, response, cookies) {
     var POST = qs.parse(body);
     client.sadd("paste:"+random, POST.paste+"");
     if (cookies.hyperion != null){
-      client.rpush(cookies.hyperion+":paste", POST.paste+"")
+      client.rpush(cookies.hyperion+":paste", random+"")
     }
   });
 
@@ -46,12 +45,12 @@ POST = function(request, response, cookies) {
 }
 
 
-GET = function(request, response) {
+GET = function(request, response, cookies) {
   var uri = url.parse(request.url).pathname;
   var parts = uri.split("/"); 
   var fn_name = "GET_"+parts[2];
   if (typeof pages.paste[fn_name] === 'function'){
-    pages.paste[fn_name](request, response, parts.slice(3));
+    pages.paste[fn_name](request, response, parts.slice(3), cookies);
   }
   else {
     filename = defualt_filename+uri;
@@ -71,5 +70,20 @@ pages.paste.GET_p = function(request, response, data){
   else {
     filename = defualt_filename+"/paste/view.html";
     files.get_file(filename, response);
+  }
+}
+
+pages.paste.GET_my = function(request, response, url_data, cookies){
+  if (url_data[0] != "pastes"){
+    response.writeHead(200, {"Content-Type":"text/plain"});
+    if (cookies.hyperion){
+      client.lrange(cookies.hyperion+":paste", 0, -1, function(err, payload){
+        response.write(payload);
+        response.end();
+      });
+    }
+  }
+  else{
+    files.get_file("/home/ted/HTTPD/paste/list.html", response);
   }
 }

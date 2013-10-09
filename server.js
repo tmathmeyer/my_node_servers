@@ -32,7 +32,7 @@ http.createServer(function(request, response) {
 		else {
 			var module = uri.split("/")[1];
 			if (modules[module]) {
-				modules[module].GET(request, response);
+				modules[module].GET(request, response, cookies);
 			}
 			else {
 				filename = defualt_filename+uri;
