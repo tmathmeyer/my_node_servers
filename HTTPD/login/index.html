@@ -1,0 +1,51 @@
+<div id = "login">
+  <script src="http://crypto-js.googlecode.com/svn/tags/3.1.2/build/rollups/sha3.js"></script>
+  <script>
+    login = function(event){
+      var pass = $("#password").val()
+      var user = $("#username").val()
+      var hash = CryptoJS.SHA3(pass, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
+      $.post(
+        "login/nothing.html",
+        {"username":user,"password":hash},
+        function( data ) {
+          console.log(data);
+          $.get(
+            data,
+            function( d2 ) {
+              if (d2 == "FAILED LOGIN"){
+                console.log("failed login");
+                document.getElementById('password').value = '';
+                document.getElementById('submit').value = "Try Again";
+              }
+              else{
+                document.cookie = d2;
+                document.getElementById('password').remove();
+                document.getElementById('submit').remove();
+                document.getElementById('username').remove();
+                document.getElementById('login').remove();
+                if (typeof page_login_event === 'function'){
+                  page_login_event();
+                }
+                console.log(d2);
+              }
+            });
+        });
+    }
+    Element.prototype.remove = function() {
+      this.parentElement.removeChild(this);
+    }
+    NodeList.prototype.remove = HTMLCollection.prototype.remove = function() {
+        for(var i = 0, len = this.length; i < len; i++) {
+            if(this[i] && this[i].parentElement) {
+                this[i].parentElement.removeChild(this[i]);
+            }
+        }
+    }
+  </script>
+  <p>
+    <input type="text" name="username" id="username" size="15" placeholder="Username"/><br />
+    <input type="password" name="password" id="password" size="15" placeholder="Password"/><br />
+    <center><input type="submit" id="submit" value="Login" style="width:100px" onClick="login()"/></center>
+  </p>
+</div>
