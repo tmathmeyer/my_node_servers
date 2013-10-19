@@ -78,7 +78,12 @@ pages.paste.GET_my = function(request, response, url_data, cookies){
     response.writeHead(200, {"Content-Type":"text/plain"});
     if (cookies.hyperion){
       client.lrange(cookies.hyperion+":paste", 0, -1, function(err, payload){
-        response.write(payload);
+        if (!payload[0]){
+          response.write("");
+          response.end();
+          return;
+        }
+        response.write(""+payload);
         response.end();
       });
     }

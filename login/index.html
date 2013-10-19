@@ -4,6 +4,10 @@
     login = function(event){
       var pass = $("#password").val()
       var user = $("#username").val()
+      if (user == "" || pass == ""){
+        alert("you need a username AND password.");
+        return;
+      }
       var hash = CryptoJS.SHA3(pass, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
       $.post(
         "login/nothing.html",

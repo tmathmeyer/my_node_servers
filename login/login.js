@@ -6,27 +6,6 @@ var http = require('http'),
     crypto = require('crypto'),
     qs = require('querystring');
 
-//http.createServer(function (request, response) {
-//  // To Get a Cookie
-//  var cookies = {};
-//  request.headers.cookie && request.headers.cookie.split(';').forEach(function( cookie ) {
-//    var parts = cookie.split('=');
-//    cookies[ parts[ 0 ].trim() ] = ( parts[ 1 ] || '' ).trim();
-//  });
-//
-//  // To Write a Cookie
-//  response.writeHead(200, {
-//    'Set-Cookie': 'mycookie=test',
-//    'Content-Type': 'text/plain'
-//  });
-//  response.end('Hello World\n');
-//}).listen(80);
-//
-//console.log('Server running at http://127.0.0.1:80/');
-
-
-
-
 
 exports.addFunctions = function(container) {
   container.login = {};
@@ -38,7 +17,6 @@ exports.addFunctions = function(container) {
 
 if (typeof pages === 'undefined'){pages = {};}
 pages.login = {};
-
 
 
 GET = function(request, response) {
@@ -55,8 +33,6 @@ GET = function(request, response) {
 }
 
 
-
-
 pages.login.GET_ok = function(request, response, data){
   var cookie =  'hyperion='+data[1]+";";
       cookie += 'expires='+new Date(new Date().getTime()+86400000).toUTCString();
@@ -67,23 +43,15 @@ pages.login.GET_ok = function(request, response, data){
 }
 
 
-
-
 pages.login.GET_failed = function(request, response, data){
   response.writeHead(200, {'Content-Type': 'text/plain'});
   response.end("FAILED LOGIN");
 }
 
 
-
-
-
 pages.login.GET_undefined = function(request, response, data){
   files.get_file("login/index.html", response);
 }
-
-
-
 
 
 POST = function(request, response, cookies) {
