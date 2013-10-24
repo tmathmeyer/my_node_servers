@@ -34,7 +34,8 @@ POST = function(request, response, cookies) {
   });
   request.on('end', function () {
     var POST = qs.parse(body);
-    client.sadd("paste:"+random, POST.paste+"");
+    //client.sadd("paste:"+random, POST.paste+"");
+    files.write_file("/home/ted/HTTPD/paste/.data/"+random+"/paste.content", Post.paste function(){}, function(a){});
     if (cookies.hyperion != null){
       client.rpush(cookies.hyperion+":paste", random+"")
     }
@@ -62,10 +63,7 @@ GET = function(request, response, cookies) {
 pages.paste.GET_p = function(request, response, data){
   if (data[0] == "p"){
     response.writeHead(200, {"Content-Type": "text/plain"});
-    var name = client.smembers("paste:"+data[1], function(error, redis_reply){
-      response.write(redis_reply[0]);
-      response.end();
-    });
+    files.get_file("/home/ted/HTTPD/paste/.data/"+data[1]+"/paste.content");
   }
   else {
     filename = defualt_filename+"/paste/view.html";

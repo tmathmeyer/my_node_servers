@@ -106,3 +106,12 @@ POST = function(request, response, cookies) {
     });
   });
 }
+
+//structure:
+// there is a list names accounts,
+//  where each element is a hshed account
+
+// there is also a kvp called <account>+"username"
+// there is also a kvp called <usernme> with the data being the acct hash
+
+// all other account associated data is known as <account>+<data> and is usually a list

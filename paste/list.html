@@ -8,14 +8,17 @@
 		<script>
 			load_list = function(){
 				$.get( "/paste/my", function( data ) {
-					data.split(",").forEach(function(instance){
-						$("body").append("<div id='item'><a href='http://tm.wpi.edu/paste/p/"+instance+"'><div id='clickable'>"+instance+"</div></a></div>");
-					});
+					if (data[0]) {
+						data.split(",").forEach(function(instance){
+							$("body").append("<div id='item'><a href='http://tm.wpi.edu/paste/p/"+instance+"'><div id='clickable'>"+instance+"</div></a></div>");
+						});
+					} else {
+						$("body").append("<div id='item'><div id='clickable'><a>you have no pastes</a></div></div>");
+					}
+					$("body").append("<div id='item'><div id='clickable'><a href='/paste'>Make a new one</a></div></div>");
 				});	
 			}
 		</script>
-
-
 
 	</head>
 

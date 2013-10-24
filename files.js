@@ -25,3 +25,13 @@ exports.get_file = function(filename, response) {
 		});
 	});
 }
+
+exports.write_file = function(filename, file_data, callback, callback_error){
+	fs.writeFile(filename, file_data, function(err) {
+	    if(err) {
+	        callback_error(err);
+	    } else {
+	        callback();
+	    }
+	});
+}
