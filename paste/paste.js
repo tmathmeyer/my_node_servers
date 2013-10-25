@@ -1,7 +1,6 @@
 var url = require("url"),
   qs = require('querystring'),
   files = require('../files'),
-  db = require('../db'),
   redis = require("redis"),
   client = redis.createClient();
 
@@ -35,7 +34,7 @@ POST = function(request, response, cookies) {
   request.on('end', function () {
     var POST = qs.parse(body);
     //client.sadd("paste:"+random, POST.paste+"");
-    files.write_file("/home/ted/HTTPD/paste/.data/"+random+"/paste.content", Post.paste function(){}, function(a){});
+    files.write_file("/home/ted/HTTPD/paste/.data/"+random+"/paste.content", Post.paste, function(){}, function(a){});
     if (cookies.hyperion != null){
       client.rpush(cookies.hyperion+":paste", random+"")
     }
@@ -58,12 +57,12 @@ GET = function(request, response, cookies) {
     files.get_file(filename, response);
   }
 }
-
+  
 
 pages.paste.GET_p = function(request, response, data){
   if (data[0] == "p"){
     response.writeHead(200, {"Content-Type": "text/plain"});
-    files.get_file("/home/ted/HTTPD/paste/.data/"+data[1]+"/paste.content");
+    files.get_file("/home/ted/HTTPD/paste/.data/"+data[1]+"/paste.content", response);
   }
   else {
     filename = defualt_filename+"/paste/view.html";
