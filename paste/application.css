@@ -100,3 +100,12 @@ textarea {
 	text-decoration: none;
 	text-transform:uppercase;
 }
+
+#item a:hover {
+	color: #9932CC;
+}
+
+#item:hover {
+	border: solid #9932CC;
+	background: #FFEA9E;
+}

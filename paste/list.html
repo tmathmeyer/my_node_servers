@@ -10,12 +10,12 @@
 				$.get( "/paste/my", function( data ) {
 					if (data[0]) {
 						data.split(",").forEach(function(instance){
-							$("body").append("<div id='item'><a href='http://tm.wpi.edu/paste/p/"+instance+"'><div id='clickable'>"+instance+"</div></a></div>");
+							$("body").append("<div id='item'><a id='user_button' href='http://tm.wpi.edu/paste/p/"+instance+"'><div id='clickable'>"+instance+"</div></a></div>");
 						});
 					} else {
 						$("body").append("<div id='item'><div id='clickable'><a>you have no pastes</a></div></div>");
 					}
-					$("body").append("<div id='item'><div id='clickable'><a href='/paste'>Make a new one</a></div></div>");
+					$("body").append("<div id='item'><a id='user_button' href='/paste'><div id='clickable'>Make a new one</div></a></div>");
 				});	
 			}
 		</script>

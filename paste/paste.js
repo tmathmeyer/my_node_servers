@@ -34,7 +34,8 @@ POST = function(request, response, cookies) {
   request.on('end', function () {
     var POST = qs.parse(body);
     //client.sadd("paste:"+random, POST.paste+"");
-    files.write_file("/home/ted/HTTPD/paste/.data/"+random+"/paste.content", Post.paste, function(){}, function(a){});
+    //files.make_folder("/home/ted/HTTPD/paste/.data/"+random);
+    files.write_file("/home/ted/HTTPD/paste/.data/"+random, POST.paste, function(a){console.log("fuck: "+a)});
     if (cookies.hyperion != null){
       client.rpush(cookies.hyperion+":paste", random+"")
     }

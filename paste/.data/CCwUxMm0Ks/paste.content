@@ -1,0 +1,18 @@
+function loadPaste() {
+	var text = $('textarea#paste').val();
+	$.get( "/paste/p" + window.location.pathname.substring(6), function( data ) {
+		console.log("/paste/p" + window.location.pathname.substring(6));
+		console.log(data);
+		document.getElementById('paste_data').innerHTML = "<pre>"+data+"</pre>";
+
+		//var $content = $("#paste_data");
+		//$content.syntaxHighlight();
+
+
+
+	});
+}
+
+function replaceAll(find, replace, str) {
+  return str.replace(new RegExp(find, 'g'), replace);
+}

@@ -1,5 +1,6 @@
 var path = require("path"),
-    fs = require("fs");
+    fs = require("fs"),
+    getDirName = require("path").dirname;
 
 exports.get_file = function(filename, response) {
 	path.exists(filename, function(exists) {
@@ -26,12 +27,14 @@ exports.get_file = function(filename, response) {
 	});
 }
 
-exports.write_file = function(filename, file_data, callback, callback_error){
-	fs.writeFile(filename, file_data, function(err) {
-	    if(err) {
-	        callback_error(err);
-	    } else {
-	        callback();
-	    }
-	});
+exports.write_file = function(filename, file_data, cb){
+	exports.make_folder(filename, function (err) {
+    	if (err) return cb(err);
+    	fs.writeFile(filename+"/paste.content", file_data, cb);
+  	})
+}
+
+exports.make_folder = function(filename, cb) {
+	console.log(filename);
+	fs.mkdir(filename, cb);
 }
