@@ -45,6 +45,14 @@ GET = function(request, response, cookies) {
   }
 }
 
+pages.img.GET_i = function(request, response, parts, cookies) {
+  response.writeHead(200, {"Content-Type": "text/html"});
+  response.end("<html><body><img src='../content/"+parts[0]+"/image.jpg'></body></html>");
+}
+
+pages.img.GET_content = function(request, response, parts, cookies) {
+  files.get_file("/home/ted/HTTPD/img/.data/"+parts[0]+"/image.jpg", response);
+}
 
 
 function upload(request, response, number) {
