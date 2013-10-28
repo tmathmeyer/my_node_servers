@@ -1,15 +1,13 @@
 var http = require("http");
 var url = require("url");
-var files = require('./files');
-var modules = require("./webmodule").read();
-var port = 80;
-var defualt_filename = "/home/ted/HTTPD"
-var charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+var modules = require("./webmodule");
+var port = 8000;
 
 
 
 http.createServer(function(request, response) {
 	var uri = url.parse(request.url).pathname;
+	modules.init();
 	
 	var cookies = {};
 	request.headers.cookie && request.headers.cookie.split(';').forEach(function( cookie ) {

@@ -1,26 +1,23 @@
-modules = 
-[
-	{
-		"name" : "Paste Server",
-		"location" : "./paste/paste"
-	}
-	//{
-	//	"name" : "Login",
-	//	"location" : "./login/login"
-	//},
-	//{
-	//	"name" : "Image",
-	//	"location" : "./img/image"
-	//}
-];
-
 var pages = {};
 
-exports.init = function() {
-	modules.forEach(function(data){
-		require(data.location).init(addPage);
-		console.log("the "+data.name+" module has been loaded");
+exports.addPage = function(url, type, page_func) {
+	addPage(url.split("/"), type, page_func);
+}
+
+
+addPage = function(url_params, type, page) {
+	nest = pages;
+	url_params.forEach(function(data){
+		if (typeof nest[data] === 'undefined') {
+			nest[data] = {};
+		}
+		nest = nest[data];
 	});
+	if (type == "get") {
+		nest._get = page;
+	} else if (type == "post") {
+		nest._post = page;
+	}
 }
 
 exports.viewPage = function(url, type, params, tree) {
@@ -42,27 +39,6 @@ exports.viewPage = function(url, type, params, tree) {
 		return false;
 	}
 }
-
-
-
-
-
-
-addPage = function(url_params, type, page) {
-	nest = pages;
-	url_params.forEach(function(data){
-		if (typeof nest[data] === 'undefined') {
-			nest[data] = {};
-		}
-		nest = nest[data];
-	});
-	if (type == "get") {
-		nest._get = page;
-	} else if (type == "post") {
-		nest._post = page;
-	}
-}
-
 
 match = function(a, b) {
 	return a==b || a=="_var" || b == "_var";
