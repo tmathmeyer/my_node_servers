@@ -5,8 +5,12 @@ mods =
 		"location" : "./paste/paste"
 	},
 	{
-		"name" : "Login Testing",
+		"name" : "Login",
 		"location" : "./login/login"
+	},
+	{
+		"name" : "Image",
+		"location" : "./img/image"
 	}
 ];
 

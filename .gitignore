@@ -1,3 +1,5 @@
 *.rdb
 *.txt
 *.sh
+
+.data/

@@ -17,10 +17,7 @@ http.createServer(function(request, response) {
 	});
 	
 	if (request.method == 'POST') {
-		if (uri == "/") {
-			//there is literally nothing here. go to index.html
-		}
-		else {
+		if (uri != "/") {
 			var module = uri.split("/")[1];
 			modules[module].POST(request, response, cookies);
 		}
@@ -36,7 +33,6 @@ http.createServer(function(request, response) {
 			}
 			else {
 				filename = defualt_filename+uri;
-				//console.log(filename);
 				files.get_file(filename, response, cookies);
 			}
 		}
