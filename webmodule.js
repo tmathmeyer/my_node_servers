@@ -1,25 +1,27 @@
-mods = 
+modules = 
 [
 	{
 		"name" : "Paste Server",
 		"location" : "./paste/paste"
-	},
-	{
-		"name" : "Login",
-		"location" : "./login/login"
-	},
-	{
-		"name" : "Image",
-		"location" : "./img/image"
+		"top_level_url" : "paste"
 	}
+	//{
+	//	"name" : "Login",
+	//	"location" : "./login/login"
+	//},
+	//{
+	//	"name" : "Image",
+	//	"location" : "./img/image"
+	//}
 ];
 
 
-exports.read = function() {
-	modules = {};
-	mods.forEach(function(data){
-		modules = require(data.location).addFunctions(modules);
+exports.init = function() {
+	functions = {};
+	modules.forEach(function(data){
+		functions[data.top_level_url] = {};
+		require(data.location).init(functions[data.top_level_url]);
 		console.log("the "+data.name+" module has been loaded");
 	});
-	return modules;
+	return functions;
 }

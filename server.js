@@ -1,11 +1,10 @@
-var http = require("http"),
-    url = require("url"),
-    files = require('./files'),
-    modules = require("./webmodule").read();
-
-port = 80;
-defualt_filename = "/home/ted/HTTPD"
-charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+var http = require("http");
+var url = require("url");
+var files = require('./files');
+var modules = require("./webmodule").read();
+var port = 80;
+var defualt_filename = "/home/ted/HTTPD"
+var charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
 http.createServer(function(request, response) {
 	var uri = url.parse(request.url).pathname;
