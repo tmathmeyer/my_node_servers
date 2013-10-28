@@ -4,6 +4,7 @@ var path = require("path"),
 
 exports.get_file = function(filename, response) {
 	path.exists(filename, function(exists) {
+		console.log(filename);
 		if(!exists) {
 			response.writeHead(404, {"Content-Type": "text/plain"});
 			response.write("404 Not Found\n");

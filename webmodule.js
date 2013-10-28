@@ -21,21 +21,29 @@ exports.init = function() {
 		require(data.location).init(addPage);
 		console.log("the "+data.name+" module has been loaded");
 	});
+	console.log(pages);
 }
 
-exports.viewPage = function(url, type, params, tree) {
+exports.viewPage = function(url, type, params) {
+	console.log(url);
+	return viewPage(url, type, params, pages, []);
+}
+
+viewPage = function(url, type, params, tree, vars) {
 	if (typeof tree === 'undefined') {
 		viewPage(url, type, params, pages);
 	} else if (url.length == 0) {
-		console.log(tree[type](params));
+		tree[type](params, vars);
 		return true;
 	} else {
 		for(var node in tree) {
 			var obj = !(typeof tree[node] === 'function');
 			var same = match(url[0], node);
-			console.log("checking: "+ node + "   type: "+obj+"   same: "+same + "    count: "+url.length);
 			if (obj && same) {
-				var found = viewPage(url.slice(1), type, params, tree[node]);
+				if (node == "_var") {
+					vars[vars.length] = url[1];
+				}
+				var found = viewPage(url.slice(1), type, params, tree[node],vars);
 				if (found) return found;
 			}
 		}
