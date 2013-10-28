@@ -6,6 +6,8 @@ var port = 80;
 var defualt_filename = "/home/ted/HTTPD"
 var charset = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
+
+
 http.createServer(function(request, response) {
 	var uri = url.parse(request.url).pathname;
 	
