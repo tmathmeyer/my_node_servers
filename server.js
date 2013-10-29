@@ -14,8 +14,6 @@ http.createServer(function(request, response) {
 		cookies[ parts[ 0 ].trim() ] = ( parts[ 1 ] || '' ).trim();
 	});
 
-	console.log("request");
-
 	type = "";
 	if (request.method == 'POST') {
 		type = "_post";
@@ -24,7 +22,6 @@ http.createServer(function(request, response) {
 	}
 
 	var success = modules.viewPage(uri.split("/").slice(1), type, [request, response, cookies]);
-	console.log(success);
 	if (! success){
 		files.get_file("/home/ted/git/nodeserver"+uri, response);
 	}

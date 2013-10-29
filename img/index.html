@@ -14,7 +14,7 @@
 				$(':button').click(function(){
 					var formData = new FormData($('form')[0]);
 					$.ajax({
-						url: 'img/test.html',  //Server script to process data
+						url: 'img/post/content',  //Server script to process data
 						type: 'POST',
 						xhr: function() {  // Custom XMLHttpRequest
 							var myXhr = $.ajaxSettings.xhr();

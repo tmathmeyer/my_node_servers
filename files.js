@@ -4,7 +4,6 @@ var path = require("path"),
 
 exports.get_file = function(filename, response) {
 	path.exists(filename, function(exists) {
-		console.log(filename);
 		if(!exists) {
 			response.writeHead(404, {"Content-Type": "text/plain"});
 			response.write("404 Not Found\n");
@@ -36,6 +35,5 @@ exports.write_file = function(filename, file_data, cb){
 }
 
 exports.make_folder = function(filename, cb) {
-	console.log(filename);
 	fs.mkdir(filename, cb);
 }

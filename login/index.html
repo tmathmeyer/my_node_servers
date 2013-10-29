@@ -9,32 +9,22 @@
         return;
       }
       var hash = CryptoJS.SHA3(pass, { outputLength: 512 }).toString(CryptoJS.enc.Hex);
-      $.post(
-        "login/nothing.html",
-        {"username":user,"password":hash},
-        function( data ) {
-          console.log(data);
-          $.get(
-            data,
-            function( d2 ) {
-              if (d2 == "FAILED LOGIN"){
-                console.log("failed login");
-                document.getElementById('password').value = '';
-                document.getElementById('submit').value = "Try Again";
-              }
-              else{
-                document.cookie = d2;
-                document.getElementById('password').remove();
-                document.getElementById('submit').remove();
-                document.getElementById('username').remove();
-                document.getElementById('login').remove();
-                if (typeof page_login_event === 'function'){
-                  page_login_event();
-                }
-                console.log(d2);
-              }
-            });
-        });
+      $.post("login/auth", {"username":user,"password":hash}, function( data ) {
+        if (data == "null") {
+          console.log("failed login");
+          document.getElementById('password').value = '';
+          document.getElementById('submit').value = "Try Again";
+        } else {
+          document.cookie = data;
+          document.getElementById('password').remove();
+          document.getElementById('submit').remove();
+          document.getElementById('username').remove();
+          document.getElementById('login').remove();
+          if (typeof page_login_event === 'function'){
+            page_login_event();
+          }
+        }
+      });
     }
     Element.prototype.remove = function() {
       this.parentElement.removeChild(this);
