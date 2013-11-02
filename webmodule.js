@@ -22,10 +22,11 @@ var pages = {};
 
 exports.init = function() {
 	modules.forEach(function(data){
-		require(data.location).init(addPage);
 		console.log("the "+data.name+" module has been loaded");
+		require(data.location).init(addPage);
+		console.log(" ");
 	});
-	console.log(JSON.stringify(pages, null, 2));
+	//console.log(JSON.stringify(pages, null, 2));
 }
 
 exports.viewPage = function(url, type, params) {
@@ -33,9 +34,6 @@ exports.viewPage = function(url, type, params) {
 }
 
 viewPage = function(url, type, params, tree, vars) {
-	console.log();
-	console.log(url);
-	console.log(vars);
 	if (typeof tree === 'undefined') {
 		viewPage(url, type, params, pages);
 	} else if (url.length == 0) {
@@ -47,7 +45,6 @@ viewPage = function(url, type, params, tree, vars) {
 			var same = match(url[0], node);
 			if (obj && same) {
 				if (node == "_var") {
-					console.log(tree);
 					var i = vars.length;
 					vars[i] = url[0];
 				}
@@ -66,6 +63,7 @@ viewPage = function(url, type, params, tree, vars) {
 
 
 addPage = function(url_params, type, page) {
+	console.log("  =>"+url_params);
 	nest = pages;
 	url_params.forEach(function(data){
 		if (typeof nest[data] === 'undefined') {
