@@ -23,7 +23,7 @@ http.createServer(function(request, response) {
 
 	var success = modules.viewPage(uri.split("/").slice(1), type, [request, response, cookies]);
 	if (! success){
-		files.get_file("/home/ted/git/nodeserver"+uri, response);
+		files.get_file(uri.substr(1), response);
 	}
 
 }).listen(parseInt(port, 10));

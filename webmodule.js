@@ -11,6 +11,10 @@ modules =
 	{
 		"name" : "Image",
 		"location" : "./img/image"
+	},
+	{
+		"name" : "Resume",
+		"location" : "./resume/resume"
 	}
 ];
 

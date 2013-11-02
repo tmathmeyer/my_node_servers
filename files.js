@@ -10,10 +10,12 @@ exports.get_file = function(filename, response) {
 			response.write("404 Not Found\n");
 			response.end();
 			return;
-		}
+		} else if (filename == "/") {
+			filename = 'home';
+		} 
 		if (fs.statSync(filename).isDirectory()) {
 			filename += '/index.html';
-		}
+		}		
 		fs.readFile(filename, "binary", function(err, file) {
 			if(err) {
 				response.writeHead(500, {"Content-Type": "text/plain"});
