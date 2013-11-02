@@ -11,10 +11,6 @@ modules =
 	{
 		"name" : "Image",
 		"location" : "./img/image"
-	},
-	{
-		"name" : "Echo",
-		"location" : "./echo/echo"
 	}
 ];
 
@@ -25,7 +21,6 @@ exports.init = function() {
 		require(data.location).init(addPage);
 		console.log("the "+data.name+" module has been loaded");
 	});
-	console.log(JSON.stringify(pages, null, 2));
 }
 
 exports.viewPage = function(url, type, params) {
@@ -33,13 +28,10 @@ exports.viewPage = function(url, type, params) {
 }
 
 viewPage = function(url, type, params, tree, vars) {
-	console.log();
-	console.log(url);
-	console.log(vars);
 	if (typeof tree === 'undefined') {
 		viewPage(url, type, params, pages);
 	} else if (url.length == 0) {
-		tree[type](params, vars);
+		tree[type].apply(null, params.concat(vars));
 		return true;
 	} else {
 		for(var node in tree) {
@@ -47,7 +39,6 @@ viewPage = function(url, type, params, tree, vars) {
 			var same = match(url[0], node);
 			if (obj && same) {
 				if (node == "_var") {
-					console.log(tree);
 					var i = vars.length;
 					vars[i] = url[0];
 				}
