@@ -8,20 +8,20 @@ var http = require('http'),
 
 
 exports.init = function(add_page) {
-  add_page(["login"], "get", function(http_params) {
-    files.get_file("login/index.html", http_params[1]);
+  add_page(["login"], "get", function(request, response) {
+    files.get_file("login/index.html", response);
   });
 
 
-  add_page(["login","auth"], "post", function(http_params) {
+  add_page(["login","auth"], "post", function(request, response) {
     var body = '';
-    http_params[0].on('data', function (data) {
+    request.on('data', function (data) {
       body += data;
       if (body.length > 1e7) { 
-        http_params[0].connection.destroy();
+        request.connection.destroy();
       }
     });
-    http_params[0].on('end', function () {
+    request.on('end', function () {
       var POST = qs.parse(body);
       var shasum = crypto.createHash('sha1');
       shasum.update(POST.username, 'ascii');
@@ -29,14 +29,14 @@ exports.init = function(add_page) {
       var acct = shasum.digest('hex');
       client.get(POST.username+"", function(err, reply){
         fail = function() {
-          http_params[1].writeHead(200, {'Content-Type': 'text/plain'});
-          http_params[1].end("null");
+          response.writeHead(200, {'Content-Type': 'text/plain'});
+          response.end("null");
         }
         succede = function() {
           var cookie =  'hyperion='+acct+";";
               cookie += 'expires='+new Date(new Date().getTime()+86400000).toUTCString();
-          http_params[1].writeHead(200, {'Content-Type':'text/plain'});
-          http_params[1].end(cookie);
+          response.writeHead(200, {'Content-Type':'text/plain'});
+          response.end(cookie);
         }
 
         if (!reply) {

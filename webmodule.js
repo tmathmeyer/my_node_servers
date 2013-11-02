@@ -11,10 +11,6 @@ modules =
 	{
 		"name" : "Image",
 		"location" : "./img/image"
-	},
-	{
-		"name" : "Echo",
-		"location" : "./echo/echo"
 	}
 ];
 
@@ -26,7 +22,6 @@ exports.init = function() {
 		require(data.location).init(addPage);
 		console.log(" ");
 	});
-	//console.log(JSON.stringify(pages, null, 2));
 }
 
 exports.viewPage = function(url, type, params) {
@@ -37,7 +32,7 @@ viewPage = function(url, type, params, tree, vars) {
 	if (typeof tree === 'undefined') {
 		viewPage(url, type, params, pages);
 	} else if (url.length == 0) {
-		tree[type](params, vars);
+		tree[type].apply(null, params.concat(vars));
 		return true;
 	} else {
 		for(var node in tree) {
