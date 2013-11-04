@@ -9,6 +9,7 @@ exports.get_file = function(filename, response) {
 			if (response.connection.remoteAddress.indexOf("66.197.237") != -1){ //this person requested a ton of php files?? I'll sort them out ;)
 				response.writeHead(200, {"Content-Type": "text/plain"});
 				response.end("Hi there! it seems you've been requesting a bunch of pages pertaining to PHP etc. This server isn't running PHP, or really any other language. I wrote it by hand, and it is running on my desktop. If you have any questions, please email tmathmeyer@gmail.com. Thanks")
+				return;
 			} else {
 				console.log(filename + " 404d  from: "+response.connection.remoteAddress+"  @"+new Date());
 				response.writeHead(404, {"Content-Type": "text/plain"});
