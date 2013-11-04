@@ -9,28 +9,28 @@ var fs = require("fs");
 
 
 exports.init = function(add_page) {
-  add_page(["img"], "get", function(http_params) {
-    files.get_file("img/index.html", http_params[1]);
+  add_page(["img"], "get", function(request, response) {
+    files.get_file("img/index.html", response);
   });
 
 
-  add_page(["img", "i", "_var"], "get", function(http_params, url_params) {
-    http_params[1].writeHead(200, {"Content-Type": "text/html"});
-    http_params[1].end("<html><body><img src='/img/content/"+url_params[0]+"'></body></html>");
+  add_page(["img", "i", "_var"], "get", function(request, response, cookies, url_params) {
+    response.writeHead(200, {"Content-Type": "text/html"});
+    response.end("<html><body><img src='/img/content/"+url_params+"'></body></html>");
   });
 
 
-  add_page(["img", "content", "_var"], "get", function(http_params, url_params) {
+  add_page(["img", "content", "_var"], "get", function(request, response, cookies, url_params) {
     console.log("get");
-    files.get_file("img/.data/"+url_params[0]+"/image.jpg", http_params[1]);
+    files.get_file("img/.data/"+url_params+"/image.jpg", response);
   });
 
 
-  add_page(["img","post","content"], "post", function(http_params, url_params) {
+  add_page(["img","post","content"], "post", function(request, response) {
     var random = generateRandom(10, charset);
-    http_params[1].writeHead(200, {"Content-Type": "text/plain"});
-    upload(http_params[0], http_params[1], random);
-    http_params[1].end("/img/i/"+random);
+    response.writeHead(200, {"Content-Type": "text/plain"});
+    upload(request, response, random);
+    response.end("/img/i/"+random);
   });
 }
 
