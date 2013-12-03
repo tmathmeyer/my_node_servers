@@ -15,6 +15,10 @@ modules =
 	{
 		"name" : "Resume",
 		"location" : "./resume/resume"
+	},
+	{
+		"name" : "Server Log",
+		"location" : "./home/home"
 	}
 ];
 
