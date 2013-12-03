@@ -5,18 +5,13 @@ var path = require("path"),
 exports.get_file = function(filename, response) {
 	path.exists(filename, function(exists) {
 		if(!exists) {
-			//this will eventually become part of a framework operation where server managers can specify 404 counts with X time that will serv back error messages
-			if (response.connection.remoteAddress.indexOf("66.197.237") != -1){ //this person requested a ton of php files?? I'll sort them out ;)
-				response.writeHead(200, {"Content-Type": "text/plain"});
-				response.end("Hi there! it seems you've been requesting a bunch of pages pertaining to PHP etc. This server isn't running PHP, or really any other language. I wrote it by hand, and it is running on my desktop. If you have any questions, please email tmathmeyer@gmail.com. Thanks")
-				return;
-			} else {
-				console.log(filename + " 404d  from: "+response.connection.remoteAddress+"  @"+new Date());
-				response.writeHead(404, {"Content-Type": "text/plain"});
-				response.write("404 Not Found\n");
-				response.end();
-				return;
+			if (response.connection.remoteAddress) {
+				console.log(filename + " 404d  from: "+response.connection.remoteAddress.replace("192.168.1.1", "127.0.0.1")+"  @"+new Date());
 			}
+			response.writeHead(404, {"Content-Type": "text/plain"});
+			response.write("Hi There. It has come to my attention that you guys from netops have been requesting all sorts of weird php pages and whatnot on my webserver. I would just like to state that this is NOT a school owned server, it is a little thing I've written entirely in node.js and have running on my desktop so I can host my resume (tm.wpi.edu/resume). I do not run proxies, you can check the logs at tm.wpi.edu/log if you want as well. but please, please, stop filling them up with 404's. If you have any questions, please feel free to email me at tmathmeyer@gmail.com\n");
+			response.end();
+			return;
 		} else if (filename == "/") {
 			filename = 'home';
 		} 

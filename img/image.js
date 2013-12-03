@@ -21,7 +21,6 @@ exports.init = function(add_page) {
 
 
   add_page(["img", "content", "_var"], "get", function(request, response, cookies, url_params) {
-    console.log("get");
     files.get_file("img/.data/"+url_params+"/image.jpg", response);
   });
 
