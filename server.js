@@ -2,7 +2,7 @@ var http = require("http");
 var url = require("url");
 var modules = require("./webmodule");
 var files = require("./files");
-var port = 80;
+var port = 8000;
 
 modules.init();
 

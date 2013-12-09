@@ -19,6 +19,10 @@ modules =
 	{
 		"name" : "Server Log",
 		"location" : "./home/home"
+	},
+	{
+		"name" : "gitstats",
+		"location" : "./gitstat/git"
 	}
 ];
 
