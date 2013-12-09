@@ -1,28 +1,34 @@
-var sys = require('sys')
+var sys = require('sys');
 var exec = require('child_process').exec;
 
 exports.init = function(add_page) {
-  add_page(["gitstat", "_var", "_var"], "get", function(http_params, url_params) {
-    exec_rando = function(error, stdout, stderr){}
-    write_to_page = function(error, stdout, stderr){
-      console.log(stdout);
-    }
-
-    console.log("FAIL");
-
-    exec("cd /tmp", exec_rando);
-    exec("git clone https://github.com/"+url_params[0]+"/"+url_params[1]);
-    exec("cd "+url_params[0], exec_rando);
-    exec("/opt/gitinspector/gitinspector.py ./", write_to_page);
-
-    
+  add_page(["gitstat", "_var", "_var", "_var"], "get", function(request, response, cookies, account, repo, date) {
+    exec("git clone git://github.com/"+account+"/"+repo+".git /tmp/"+repo, function(){
+      exec("/opt/gitinspector/gitinspector.py --since="+date+" /tmp/"+repo+"/", function(error, stdout, stderr){
+        response.writeHead(200, {"Content-Type":"text/plain"});
+        response.write(stdout+"");
+        response.end();
+        exec("rm -rf /tmp/"+repo, function(){});
+      });
+    });
   });
 
-  add_page(["gitstat"], "get", function(http_params, url_params) {
+  add_page(["gitstat", "_var", "_var"], "get", function(request, response, cookies, account, repo) {
+    exec("git clone git://github.com/"+account+"/"+repo+".git /tmp/"+repo, function(){
+      exec("/opt/gitinspector/gitinspector.py /tmp/"+repo+"/", function(error, stdout, stderr){
+        response.writeHead(200, {"Content-Type":"text/plain"});
+        response.write(stdout+"");
+        response.end();
+        exec("rm -rf /tmp/"+repo, function(){});
+      });
+    });
+  });
+
+  add_page(["gitstat"], "get", function(request, response) {
     console.log("FAIL");
 
     response.writeHead(200, {"Content-Type":"text/plain"});
-    response.write("FUCK");
+    response.write("if the github repo is github.com/tmathmeyer/nodeserver, your url should look like ../gitstat/tmathmeyer/nodeserver");
     response.end();
   });
 }
