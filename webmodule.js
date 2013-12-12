@@ -19,6 +19,10 @@ modules =
 	{
 		"name" : "Server Log",
 		"location" : "./home/home"
+	},
+	{
+		"name" : "gitstats",
+		"location" : "./gitstat/git"
 	}
 ];
 
@@ -40,7 +44,9 @@ viewPage = function(url, type, params, tree, vars) {
 	if (typeof tree === 'undefined') {
 		viewPage(url, type, params, pages);
 	} else if (url.length == 0) {
-		tree[type].apply(null, params.concat(vars));
+		if (tree[type]){
+			tree[type].apply(null, params.concat(vars));
+		}
 		return true;
 	} else {
 		for(var node in tree) {
