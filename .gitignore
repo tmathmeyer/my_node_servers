@@ -1,6 +1,7 @@
 *.rdb
 *.txt
 *.sh
+*.log
 
 .data/
 node_modules/
