@@ -23,6 +23,10 @@ modules =
 	{
 		"name" : "gitstats",
 		"location" : "./gitstat/git"
+	},
+	{
+		"name" : "facebook stalker",
+		"location" : "./fbstalk/fbstalk"
 	}
 ];
 
