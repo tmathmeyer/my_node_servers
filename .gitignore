@@ -2,6 +2,7 @@
 *.txt
 *.sh
 *.log
+*.swp
 
 .data/
 node_modules/

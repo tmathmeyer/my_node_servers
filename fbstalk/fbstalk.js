@@ -39,23 +39,12 @@ exports.init = function(add_page) {
                 res.on('end', function(){
                     var long_access_token = qs.parse(fb_reply).access_token;
                     
-                    facebook.getFbData(long_access_token, '/me?fields=friends.fields(id)', function(data){
+                    facebook.getFbData(long_access_token, '/me?fields=friends.fields(id)', function(friends_response){
                     
-                        var db_insert = {name:post_data.name, acct_id:post_data.id, access_token:long_access_token, friends:friends};
+                        var db_insert = {name:post_data.name, acct_id:post_data.id, access_token:long_access_token, friends:friends_response.friends.data};
                     
-                        console.log(post_data.friends);
-                        console.log();
-                        console.log(friends);
-                        friends.forEach(function(data, index){
-                            var db_ins = data;
-                            db_ins.times=[];
-                            console.log(db_ins);
-                            mongo.accounts.save(db_ins, function(err){
-                                if (err){
-                                    console.log(err);
-                                }
-                            });
-                        });
+                        console.log(friends_response.friends.data);
+                        
 
                         mongo.users.find({acct_id:post_data.id}, function(err, data){
                             if (err || !data || data.length==0){
@@ -73,6 +62,8 @@ exports.init = function(add_page) {
                             }
                         });
                     });
+
+                });
             }).on('error', function(e) {
                   response.writeHead(200, {"Content-Type": "text/plain"});
                   response.end(e.message);
