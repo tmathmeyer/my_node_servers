@@ -7,14 +7,14 @@
                     if (response.authResponse) {
                         console.log("logged in!");
                         var name = '';
-                        FB.api('/me', function(response){
-                            name = response.name;
-                        });
-                        var payload = {"token": response.authResponse.accessToken, "name":name, "id":response.authResponse.userID};
-                        console.log(response);
-                        console.log(payload);
-                        $.post( "chatgraph/login", payload, function(data){
-                            alert("thucthethth");
+                        FB.api('/me', function(api){
+                            name = api.name;
+                            var payload = {"token": response.authResponse.accessToken, "name":name, "id":response.authResponse.userID};
+                            console.log(response);
+                            console.log(payload);
+                            $.post( "chatgraph/login", payload, function(data){
+                                alert("thucthethth");
+                            });
                         });
                     } else {
                         console.log("damnit");

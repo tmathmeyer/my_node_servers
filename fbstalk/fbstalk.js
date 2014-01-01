@@ -38,22 +38,29 @@ exports.init = function(add_page) {
                 res.on('end', function(){
                     var long_access_token = qs.parse(fb_reply).access_token;
                     var db_insert = {name:post_data.name, acct_id:post_data.id, access_token:long_access_token, priv_acct:[]};
+                    console.log(db_insert);
                     mongo.users.find({acct_id:post_data.id}, function(err, data){
                         if (err || !data || data.length==0){
                             console.log("that is a new user!");
                             console.log(err);
                             mongo.users.save(db_insert, function(err, data){
-                                console.log({"err":err});
-                                console.log({"data":data});
+                                response.writeHead(200, {"Content-Type":"text/plain"});
+                                if (err){
+                                    response.end("/chatgraph/error/database");
+                                } else {
+                                    response.end("/chatgraph/"+post_data.id+"/friends/graphs");
+                                }
                             });
                         } else {
-                            console.log("that is an old user!");
-                            console.log(data);
+                            response.writeHead(200, {"Content-Type": "text/plain"});
+                            response.end("/chatgraph/" + post_data.id + "/friends/graphs");
                         }
                     });
                 });
             }).on('error', function(e) {
                   console.log("Got error: " + e.message);
+                  response.writeHead(200, {"Content-Type": "text/plain"});
+                  response.end(e.message);
             });
 
         });

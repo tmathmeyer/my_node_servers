@@ -1130,3 +1130,74 @@ gitstat/a/b 404d  from: 127.0.0.1  @Mon Dec 02 2013 17:10:18 GMT-0500 (EST)
 gitstat 404d  from: 127.0.0.1  @Mon Dec 02 2013 17:12:10 GMT-0500 (EST)
 cgi-bin/php4 404d  from: 94.102.51.238  @Mon Dec 02 2013 17:18:01 GMT-0500 (EST)
  404d  from: 183.182.84.172  @Mon Dec 02 2013 18:47:25 GMT-0500 (UTC)
+the Paste Server module has been loaded
+  =>paste,p,p,_var
+  =>paste,p,_var
+  =>paste
+  =>paste,my
+  =>paste,my,pastes
+  =>paste,post,content
+ 
+the Login module has been loaded
+  =>login
+  =>login,auth
+ 
+the Image module has been loaded
+  =>img
+  =>img,i,_var
+  =>img,content,_var
+  =>img,post,content
+ 
+the Resume module has been loaded
+  =>resume,_var
+  =>resume
+ 
+the Server Log module has been loaded
+  =>log
+ 
+the gitstats module has been loaded
+  =>gitstat,_var,_var,_var
+  =>gitstat,_var,_var
+  =>gitstat
+ 
+the facebook stalker module has been loaded
+  =>chatgraph
+  =>chatgraph,login
+ 
+the Paste Server module has been loaded
+  =>paste,p,p,_var
+  =>paste,p,_var
+  =>paste
+  =>paste,my
+  =>paste,my,pastes
+  =>paste,post,content
+ 
+the Login module has been loaded
+  =>login
+  =>login,auth
+ 
+the Image module has been loaded
+  =>img
+  =>img,i,_var
+  =>img,content,_var
+  =>img,post,content
+ 
+the Resume module has been loaded
+  =>resume,_var
+  =>resume
+ 
+the Server Log module has been loaded
+  =>log
+ 
+the gitstats module has been loaded
+  =>gitstat,_var,_var,_var
+  =>gitstat,_var,_var
+  =>gitstat
+ 
+the facebook stalker module has been loaded
+  =>chatgraph
+  =>chatgraph,login
+ 
+path.exists is now called `fs.exists`.
+ 404d  from: 127.0.0.1  @Sun Jan 18 2009 20:40:40 GMT-0500 (EST)
+favicon.ico 404d  from: 127.0.0.1  @Sun Jan 18 2009 20:40:41 GMT-0500 (EST)
