@@ -2,6 +2,7 @@ var files = require('../files');
 var mongo = require('./mongo');
 var qs = require('querystring');
 var https = require('https');
+var facebook = require('./facebook');
 
 exports.init = function(add_page) {
     add_page(["chatgraph"], "get", function(request, response, cookies) {
@@ -37,28 +38,42 @@ exports.init = function(add_page) {
                 });
                 res.on('end', function(){
                     var long_access_token = qs.parse(fb_reply).access_token;
-                    var db_insert = {name:post_data.name, acct_id:post_data.id, access_token:long_access_token, priv_acct:[]};
-                    console.log(db_insert);
-                    mongo.users.find({acct_id:post_data.id}, function(err, data){
-                        if (err || !data || data.length==0){
-                            console.log("that is a new user!");
-                            console.log(err);
-                            mongo.users.save(db_insert, function(err, data){
-                                response.writeHead(200, {"Content-Type":"text/plain"});
+                    
+                    facebook.getFbData(long_access_token, '/me?fields=friends.fields(id)', function(data){
+                    
+                        var db_insert = {name:post_data.name, acct_id:post_data.id, access_token:long_access_token, friends:friends};
+                    
+                        console.log(post_data.friends);
+                        console.log();
+                        console.log(friends);
+                        friends.forEach(function(data, index){
+                            var db_ins = data;
+                            db_ins.times=[];
+                            console.log(db_ins);
+                            mongo.accounts.save(db_ins, function(err){
                                 if (err){
-                                    response.end("/chatgraph/error/database");
-                                } else {
-                                    response.end("/chatgraph/"+post_data.id+"/friends/graphs");
+                                    console.log(err);
                                 }
                             });
-                        } else {
-                            response.writeHead(200, {"Content-Type": "text/plain"});
-                            response.end("/chatgraph/" + post_data.id + "/friends/graphs");
-                        }
+                        });
+
+                        mongo.users.find({acct_id:post_data.id}, function(err, data){
+                            if (err || !data || data.length==0){
+                                mongo.users.save(db_insert, function(err, data){
+                                    response.writeHead(200, {"Content-Type":"text/plain"});
+                                    if (err){
+                                        response.end("/chatgraph/error/database");
+                                    } else {
+                                        response.end("/chatgraph/"+post_data.id+"/friends/graphs");
+                                    }
+                                });
+                            } else {
+                                response.writeHead(200, {"Content-Type": "text/plain"});
+                                response.end("/chatgraph/" + post_data.id + "/friends/graphs");
+                            }
+                        });
                     });
-                });
             }).on('error', function(e) {
-                  console.log("Got error: " + e.message);
                   response.writeHead(200, {"Content-Type": "text/plain"});
                   response.end(e.message);
             });
