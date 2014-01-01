@@ -39,12 +39,28 @@ exports.init = function(add_page) {
                 res.on('end', function(){
                     var long_access_token = qs.parse(fb_reply).access_token;
                     
-                    facebook.getFbData(long_access_token, '/me?fields=friends.fields(id)', function(friends_response){
+                    facebook.getFbData(long_access_token, '/me?fields=friends,name', function(friends_response){
                     
-                        var db_insert = {name:post_data.name, acct_id:post_data.id, access_token:long_access_token, friends:friends_response.friends.data};
+                        var db_insert = {
+                            name:friends_response.name,
+                            acct_id:post_data.id,
+                            access_token:long_access_token,
+                            friends:filter(friends_response.friends.data, function(val){
+                                return val.id;
+                            });
+                        };
                     
                         console.log(friends_response.friends.data);
                         
+                        friends_response.friends.data.forEach(function(friend)){
+                            var acct_dbins = {
+                                name:friend.name,
+                                id:friend.id,
+                                online:[]
+                            };
+                            mongo.accounts.save(acct_dbins);
+                        }
+
 
                         mongo.users.find({acct_id:post_data.id}, function(err, data){
                             if (err || !data || data.length==0){
@@ -79,4 +95,13 @@ strcct = function(strs){
         res+=data;
     });
     return res;
+}
+
+// [ {A, B, C, D,...} ] -> ({A, B, C, D,...} -> X) -> [X]
+filter = function(arr, keep){
+    var rest = [];
+    arr.forEach(function(val){
+        rest.push(keep(val));
+    });
+    return rest;
 }
