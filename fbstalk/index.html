@@ -7,13 +7,9 @@
                     if (response.authResponse) {
                         console.log("logged in!");
                         var name = '';
-                        FB.api('/me?fields=name,friends', function(api){
-                            var payload = {"token": response.authResponse.accessToken, "name":api.name, "id":response.authResponse.userID, "friends":api.friends.data};
-                            console.log(response);
-                            console.log(payload);
-                            $.post( "chatgraph/login", payload, function(data){
-                                alert("thucthethth");
-                            });
+                        var payload = {"token": response.authResponse.accessToken, "id":response.authResponse.userID};
+                        $.post( "chatgraph/login", payload, function(data){
+                            alert("thucthethth");
                         });
                     } else {
                         console.log("damnit");
