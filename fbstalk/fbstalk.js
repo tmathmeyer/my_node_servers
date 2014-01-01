@@ -47,19 +47,17 @@ exports.init = function(add_page) {
                             access_token:long_access_token,
                             friends:filter(friends_response.friends.data, function(val){
                                 return val.id;
-                            });
+                            })
                         };
                     
-                        console.log(friends_response.friends.data);
-                        
-                        friends_response.friends.data.forEach(function(friend)){
+                        friends_response.friends.data.forEach(function(friend){
                             var acct_dbins = {
                                 name:friend.name,
                                 id:friend.id,
                                 online:[]
                             };
                             mongo.accounts.save(acct_dbins);
-                        }
+                        });
 
                         mongo.users.find({acct_id:post_data.id}, function(err, data){
                             if (err || !data || data.length==0){
