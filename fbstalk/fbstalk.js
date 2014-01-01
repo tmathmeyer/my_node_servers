@@ -61,7 +61,6 @@ exports.init = function(add_page) {
                             mongo.accounts.save(acct_dbins);
                         }
 
-
                         mongo.users.find({acct_id:post_data.id}, function(err, data){
                             if (err || !data || data.length==0){
                                 mongo.users.save(db_insert, function(err, data){
