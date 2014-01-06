@@ -8,14 +8,33 @@
 					var blob = JSON.parse(data);
 					console.log(blob);
 			
+					blob.forEach(function(data){
+
+						$('<div>').attr({
+							id:data.id
+						}).appendTo('graphs');
+
+						$('<canvas>').attr({
+							id:data.id+"graph"
+						}).appendTo(data.id);
+
+						//$(''+data.id).html(data.name);
+
+
+
+						var ctx = document.getElementById(data.id+"graph").getContext("2d");
+						new Chart(ctx).Doughnut(get_doughnut_data(timedata));
+
+					});
+
+
 					timedata = blob[45].data;
 
-					var ctx = document.getElementById("myChart").getContext("2d");
-					new Chart(ctx).Doughnut(get_doughnut_data(timedata));
+					
 				});
 			}
 
-			function get_doughnut_data = function(timedata){
+			get_doughnut_data = function(timedata){
 				var oia = [
 					{
 						value:0,
@@ -40,5 +59,21 @@
 
 	<body onload = pageinit()>
 		<canvas id="myChart" width="400" height="400"></canvas>
+
+		<div id = "graphs">
+
+		</div>
 	</body>
 </html>
+
+
+
+
+
+
+$('<canvas>').attr({
+    id: elementID
+}).css({
+    width: rectWidth + 'px',
+    height: rectHeight + 'px'
+}).appendTo('#work_area');
