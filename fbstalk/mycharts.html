@@ -5,11 +5,35 @@
 		<script>
 			pageinit = function(){
 				$.get( "http://192.168.1.138/chatgraph/me/100004193232942/raw/0/0", function( data ) {
-					console.log(data);
+					var blob = JSON.parse(data);
+					console.log(blob);
 			
+					timedata = blob[45].data;
+
 					var ctx = document.getElementById("myChart").getContext("2d");
-					//new Chart(ctx).Doughnut(data,options);
+					new Chart(ctx).Doughnut(get_doughnut_data(timedata));
 				});
+			}
+
+			function get_doughnut_data = function(timedata){
+				var oia = [
+					{
+						value:0,
+						color:"#FF9999"
+					},
+					{
+						value:0,
+						color:"#FFFF99"
+					},
+					{
+						value:0,
+						color:"#99FF99"
+					}
+				];
+				timedata.forEach(function(data){
+					oia[data.status+1].value ++;
+				});
+				return oia;
 			}
 		</script>
 	</head>
