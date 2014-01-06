@@ -1,0 +1,20 @@
+<html>
+	<head>
+		<script src="Chart.js"></script>
+		<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+		<script>
+			pageinit = function(){
+				$.get( "http://192.168.1.138/chatgraph/me/100004193232942/raw/0/0", function( data ) {
+					console.log(data);
+			
+					var ctx = document.getElementById("myChart").getContext("2d");
+					//new Chart(ctx).Doughnut(data,options);
+				});
+			}
+		</script>
+	</head>
+
+	<body onload = pageinit()>
+		<canvas id="myChart" width="400" height="400"></canvas>
+	</body>
+</html>
